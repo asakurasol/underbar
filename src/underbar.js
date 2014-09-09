@@ -106,7 +106,21 @@ var _ = {};
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
-    
+    var result = [];
+    var copy = array.slice();
+    console.log(copy);
+    while (copy.length > 0){
+      console.log(copy);
+      var element = copy.splice(0,1)[0];
+      result.push(element);
+      for (var j = 0; j < copy.length; j++){
+        if(element === copy[j]){
+          copy.splice(j,1);
+          j--;
+        }
+      }
+    }
+    return result;
   };
 
 
