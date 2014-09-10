@@ -108,9 +108,7 @@ var _ = {};
   _.uniq = function(array) {
     var result = [];
     var copy = array.slice();
-    console.log(copy);
     while (copy.length > 0){
-      console.log(copy);
       var element = copy.splice(0,1)[0];
       result.push(element);
       for (var j = 0; j < copy.length; j++){
@@ -162,7 +160,6 @@ var _ = {};
       var fun = item[functionOrKey];
       if (functionOrKey instanceof Function){
         fun = functionOrKey;
-        console.log("this ran");
       };
       return fun.apply(item, [args]);
     })
