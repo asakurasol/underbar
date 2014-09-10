@@ -158,7 +158,6 @@ var _ = {};
   // Calls the method named by functionOrKey on each value in the list.
   // Note: you will nead to learn a bit about .apply to complete this.
   _.invoke = function(collection, functionOrKey, args) {
-
     return _.map(collection, function(item){
       var fun = item[functionOrKey];
       if (functionOrKey instanceof Function){
@@ -183,6 +182,11 @@ var _ = {};
   //     return total + number;
   //   }, 0); // should be 6
   _.reduce = function(collection, iterator, accumulator) {
+    var accumulator = accumulator === undefined ? collection[0] : accumulator;
+    _.each(collection, function(value){
+      accumulator = iterator(accumulator, value);
+    });
+    return accumulator;
   };
 
   // Determine if the array or object contains a given value (using `===`).
