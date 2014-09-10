@@ -206,7 +206,7 @@ var _ = {};
       if(!isTrue){
         return false;
       }
-      return iterator === undefined ? item : Boolean(iterator(item));
+      return iterator === undefined ? Boolean(item) : Boolean(iterator(item));
     }, true)
   };
 
@@ -214,6 +214,9 @@ var _ = {};
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
+    return !_.every(collection, function(item){
+      return iterator === undefined ? !Boolean(item) : !iterator(item);
+    })
   };
 
 
