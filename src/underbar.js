@@ -161,7 +161,7 @@ var _ = {};
       if (functionOrKey instanceof Function){
         fun = functionOrKey;
       };
-      return fun.apply(item, [args]);
+      return fun.apply(item, args);
     })
   };
 
