@@ -431,6 +431,25 @@ var _ = {};
   // Takes an arbitrary number of arrays and produces an array that contains
   // every item shared between all the passed-in arrays.
   _.intersection = function() {
+    //find the array with the least number of elements using reduce
+    var minArray = arguments[1];
+    var args = arguments
+    var inAllArray = function(element){
+      return _.every(args, function(arg){
+        return _.contains(arg, element);
+      })
+    };
+
+    minArray = _.reduce(arguments, function(minArray, arg){
+      return minArray > arg.length ? arg : minArray;
+    }, minArray)
+    //for every element of the array, add to result if every argument contains that element
+    return _.reduce(minArray, function(result,element){
+      if(inAllArray(element)){
+        result.push(element);
+      }
+      return result;
+    },[])
   };
 
   // Take the difference between one array and a number of other arrays.
