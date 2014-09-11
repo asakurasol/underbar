@@ -393,7 +393,7 @@ var _ = {};
     console.log(arguments);
     var length = _.reduce(arguments, function(len, arg){
       return len > arg.length ? len : arg.length;
-    },0)
+    },0) 
     return _.reduce(arguments, function(result, arg){
       for(var i = 0; i < length; i++){
         if(result[i] === undefined){
@@ -412,6 +412,20 @@ var _ = {};
   //
   // Hint: Use Array.isArray to check if something is an array
   _.flatten = function(nestedArray, result) {
+    var result = [];
+    var insert = function(element){
+      if(!Array.isArray(element)){
+        result.push(element);
+      }
+      else{
+        return _.each(element, function(item){
+          return insert(item);
+        })
+      }
+    }
+
+    insert(nestedArray);
+    return result;
   };
 
   // Takes an arbitrary number of arrays and produces an array that contains
