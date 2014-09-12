@@ -319,7 +319,6 @@ var _ = {};
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
-    console.log(arguments);
     var args = Array.prototype.slice.call(arguments,2);
     var delayedFunc = function(){
         return func.apply(this,args);
@@ -365,7 +364,6 @@ var _ = {};
       var aProp;
       var bProp;
       if(typeof iterator == 'string'){
-        console.log("this ran");
         aProp = a[iterator];
         bProp = b[iterator];
       }
@@ -390,7 +388,6 @@ var _ = {};
   // _.zip(['a','b','c','d'], [1,2,3]) returns [['a',1], ['b',2], ['c',3], ['d',undefined]]
   _.zip = function() {
     var result = [];
-    console.log(arguments);
     var length = _.reduce(arguments, function(len, arg){
       return len > arg.length ? len : arg.length;
     },0) 
@@ -482,16 +479,33 @@ var _ = {};
   // See the Underbar readme for details.
   _.throttle = function(func, wait) {
     var waiting = false;
+    var waitlist = 0;
+    var result;
+    var resultFunc = function(){
+                  if(!waiting)
+                  { waiting = true;
+                    setTimeout(waitReset, wait);
+                    result = func.apply(this, arguments);
+                    return result;
+                  }
+                  {
+                    waitlist++;
+                    console.log("counter is now at" + waitlist);
+                    return result;
+                  }
+                };
+
     var waitReset = function(){
+      console.log(waiting);
       waiting = false;
-    }
-    return function(){
-      if(!waiting)
-      { waiting = true;
-        setTimeout(waitReset, wait);
-        return func.apply(this, arguments);
+      if (waitlist > 0){
+        console.log("this ran");
+        waitlist--;
+        return resultFunc.apply(this,arguments);
       }
     }
+
+    return resultFunc;
   };
 
 }).call(this);
