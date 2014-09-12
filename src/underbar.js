@@ -478,9 +478,20 @@ var _ = {};
 
   // Returns a function, that, when invoked, will only be triggered at most once
   // during a given window of time.
-  //
+  //I hate this is so hard!!!
   // See the Underbar readme for details.
   _.throttle = function(func, wait) {
+    var waiting = false;
+    var waitReset = function(){
+      waiting = false;
+    }
+    return function(){
+      if(!waiting)
+      { waiting = true;
+        setTimeout(waitReset, wait);
+        return func.apply(this, arguments);
+      }
+    }
   };
 
 }).call(this);
